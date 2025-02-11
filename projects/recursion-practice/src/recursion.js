@@ -9,12 +9,12 @@ var factorial = function(n, output = 1) {
   if(n < 0){
     return null;
   }
-  if(n === 1){
-    return 1;
+  if(n === 1 || n === 0){
+    return output;
   }
 output *= n;
 
-return factorial(n -1)
+return factorial(n -1, output)
 };
 
 // 2. Compute the sum of an array of integers.
@@ -33,6 +33,21 @@ var sum = function(array, output = 0) {
 // 3. Sum all numbers in an array containing nested arrays.
 // Example: arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+  let sum = 0;
+
+  // Iterate through each element in the array
+  for (let element of array) {
+    // If the element is an array, recursively call arraySum
+    if (Array.isArray(element)) {
+      sum += arraySum(element);
+    } else if (typeof element === 'number') {
+      // If the element is a number, add it to the sum
+      sum += element;
+    }
+  }
+
+  // Return the total sum
+  return sum;
 };
 
 // 4. Check if a number is even.
@@ -62,11 +77,42 @@ var isEven = function(n) {
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+  // Base case: if n is 0, return 0
+  if (n === 0) {
+    return 0;
+  }
+
+  // If n is positive, sum numbers below n
+  if (n > 0) {
+    return (n - 1) + sumBelow(n - 1);
+  }
+
+  // If n is negative, sum numbers above n
+  if (n < 0) {
+    return (n + 1) + sumBelow(n + 1);
+  }
+
 };
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
-var range = function(x, y) {
+var range = function(x, y, output = []) {
+// Base case: if x is equal to or one step away from y, return the accumulated output
+if (x === y || x === y - 1 || x === y + 1) {
+  return output;
+}
+
+// Recursive case for ascending order
+if (x < y) {
+  output.push(x + 1);
+  return range(x + 1, y, output);
+}
+
+// Recursive case for descending order
+if (x > y) {
+  output.push(x - 1);
+  return range(x - 1, y, output);
+}
 };
 
 // 7. Compute the exponent of a number.
