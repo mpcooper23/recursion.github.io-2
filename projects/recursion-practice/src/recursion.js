@@ -27,7 +27,7 @@ var sum = function(array, output = 0) {
 
   output += array[0]
 
-  sum(array.slice(1), output)
+ return sum(array.slice(1), output)
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
@@ -37,7 +37,26 @@ var arraySum = function(array) {
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+  // Handle negative numbers by converting them to positive
+  if (n < 0) {
+    n = -n;
+  }
+
+  // Base case: if n is 0, it's even
+  if (n === 0) {
+    return true;
+  }
+
+  // Base case: if n is 1, it's odd
+  if (n === 1) {
+    return false;
+  }
+
+  // Recursive call: reduce n by 2
+  return isEven(n - 2);
 };
+
+
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
