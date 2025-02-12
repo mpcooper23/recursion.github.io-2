@@ -121,6 +121,22 @@ if (x > y) {
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+  //base
+  if(base === 0){
+return 0;
+  }
+  if(exp === 0){
+    return 1;
+  }
+  if(exp === 1){
+    return base;
+  }
+  if (base > 0){
+    let base = -base
+  }
+  //recursion
+
+  return exponent(base - 1, exp - 1)
 };
 
 // 8. Determine if a number is a power of two.
