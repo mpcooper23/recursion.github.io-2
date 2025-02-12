@@ -131,12 +131,12 @@ return 0;
   if(exp === 1){
     return base;
   }
-  if (base > 0){
-    let base = -base
-  }
+    // Handle negative exponents
+    if (exp < 0) {
+      return 1 / exponent(base, -exp);
+    }
   //recursion
-
-  return exponent(base - 1, exp - 1)
+  return base * exponent(base, exp - 1)
 };
 
 // 8. Determine if a number is a power of two.
