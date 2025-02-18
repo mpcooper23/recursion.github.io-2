@@ -279,17 +279,15 @@ var compareStr = function(str1, str2) {
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
-var createArray = function(str){
-  //base
-if(str.length === 0){
-  return [];
-}
-  //recursion
-for(let i = 0; i < str.length; i++){
-  [].push(str[i])
-}
-  return createArray(str.slice(0, 1))
+var createArray = function(str) {
+  // Base case: if the string is empty, return an empty array
+  if (str.length === 0) {
+    return [];
+  }
+  // Recursive case: take the first character and concatenate it with the array created from the rest
+  return [str[0]].concat(createArray(str.slice(1)));
 };
+
 
 // 17. Reverse the order of an array
 var reverseArr = function(array) {
@@ -306,18 +304,41 @@ var reverseArr = function(array) {
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+  // Base case: if length is 0, return an empty array
+  if (length === 0) {
+    return [];
+  }
+  // Recursive case: add the value to the array and call buildList with length - 1
+  return [value].concat(buildList(value, length - 1));
 };
+
 
 // 19. Count the occurence of a value inside a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
 var countOccurrence = function(array, value) {
+  // Base case: if the array is empty, return 0
+  if (array.length === 0) {
+    return 0;
+  }
+  // Check if the first element matches the value
+  const match = array[0] === value ? 1 : 0;
+  // Recursive case: add the match result to the count from the rest of the array
+  return match + countOccurrence(array.slice(1), value);
 };
+
 
 // 20. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 var rMap = function(array, callback) {
+  // Base case: if the array is empty, return an empty array
+  if (array.length === 0) {
+    return [];
+  }
+  // Recursive case: apply the callback to the first element and concatenate with the result of rMap on the rest
+  return [callback(array[0])].concat(rMap(array.slice(1), callback));
 };
+
 
 // 21. Write a function that counts the number of times a key occurs in an object.
 // var testobj = {'e': {'x':'y'}, 't':{'r': {'e':'r'}, 'p': {'y':'r'}},'y':'e'};
@@ -343,8 +364,19 @@ var replaceKeysInObj = function(obj, key, newKey) {
 // Example:  0, 1, 1, 2, 3, 5, 8, 13, 21, 34.....
 // fibonacci(5);  // [0, 1, 1, 2, 3, 5]
 // Note:  The 0 is not counted.
-var fibonacci = function(n) {
+var fibonacci = function(n, sequence = [0, 1]) {
+  // Base case: if the sequence has n+1 elements, return the sequence
+  if (sequence.length > n) {
+    return sequence;
+  }
+  // Calculate the next Fibonacci number
+  const nextFibo = sequence[sequence.length - 1] + sequence[sequence.length - 2];
+  // Add the next Fibonacci number to the sequence
+  sequence.push(nextFibo);
+  // Recursive call to build the sequence
+  return fibonacci(n, sequence);
 };
+
 
 // 25. Return the Fibonacci number located at index n of the Fibonacci sequence.
 // [0,1,1,2,3,5,8,13,21]
@@ -352,17 +384,33 @@ var fibonacci = function(n) {
 // nthFibo(7); // 13
 // nthFibo(3); // 2
 var nthFibo = function(n) {
+  // Base case: return 0 if n is 0, and 1 if n is 1
+  if (n === 0) {
+    return 0;
+  }
+  if (n === 1) {
+    return 1;
+  }
+  // Recursive case: return the sum of the two preceding Fibonacci numbers
+  return nthFibo(n - 1) + nthFibo(n - 2);
 };
+
 
 // 26. Given an array of words, return a new array containing each word capitalized.
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
 var capitalizeWords = function(input) {
+  //base
+
+  //recursion
 };
 
 // 27. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car', 'poop', 'banana']); // ['Car', 'Poop', 'Banana']
 var capitalizeFirst = function(array) {
+    //base
+
+  //recursion
 };
 
 // 28. Return the sum of all even numbers in an object containing nested objects.
@@ -375,11 +423,17 @@ var capitalizeFirst = function(array) {
 // };
 // nestedEvenSum(obj1); // 10
 var nestedEvenSum = function(obj) {
+    //base
+
+  //recursion
 };
 
 // 29. Flatten an array containing nested arrays.
 // Example: flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(arrays) {
+    //base
+
+  //recursion
 };
 
 // 30. Given a string, return an object containing tallies of each letter.
