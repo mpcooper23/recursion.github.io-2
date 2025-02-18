@@ -173,12 +173,20 @@ var reverse = function(string) {
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
-  //base case
-if(string.length === 0){
-  return
-}
-  //recursion
+  // Base case: if the string is empty or has one character
+  if (string.length <= 1) {
+    return true;
+  }
+  
+  // Check first and last characters
+  if (string[0] !== string[string.length - 1]) {
+    return false;
+  }
+  
+  // Recursion: check the substring excluding the first and last characters
+  return palindrome(string.slice(1, -1));
 };
+
 
 // 11. Write a function that returns the remainder of x divided by y without using the
 // modulo (%) operator.
@@ -186,17 +194,56 @@ if(string.length === 0){
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+  if (x / y !== 0){
+    return x - y * (x / y)
+  }
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator  or
 // JavaScript's Math object.
 // ATTENTION DO NOT LEAVE COMMENTS IN THIS FUNCTION. The test is looking for any ('/').
-var multiply = function(x, y) {
-};
+
+  var multiply = function(x, y) {
+    let result = 0;
+    let isNegative = false;
+    
+    if (y < 0) {
+      isNegative = true;
+      y = -y;
+    }
+    
+    for (let i = 0; i < y; i++) {
+      result += x;
+    }
+    
+    return isNegative ? -result : result;
+  };
 
 // 13. Write a function that divides two numbers without using the / operator  or
 // JavaScript's Math object.
 var divide = function(x, y) {
+  if (y === 0) {
+    return "Division by zero is not allowed.";
+  }
+
+  let result = 0;
+  let isNegative = false;
+
+  if (x < 0) {
+    isNegative = !isNegative;
+    x = -x;
+  }
+  if (y < 0) {
+    isNegative = !isNegative;
+    y = -y;
+  }
+
+  while (x >= y) {
+    x -= y;
+    result++;
+  }
+
+  return isNegative ? -result : result;
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers.  The GCD of two
@@ -205,6 +252,10 @@ var divide = function(x, y) {
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
 var gcd = function(x, y) {
+  if (y === 0) {
+    return x;
+  }
+  return gcd(y, x % y);
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
@@ -213,7 +264,18 @@ var gcd = function(x, y) {
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  // Base case: if both strings are empty, they are identical
+  if (str1.length === 0 && str2.length === 0) {
+    return true;
+  }
+  // Base case: if the first characters are different or lengths are different, they are not identical
+  if (str1[0] !== str2[0] || str1.length !== str2.length) {
+    return false;
+  }
+  // Recursive case: compare the rest of the strings
+  return compareStr(str1.slice(1), str2.slice(1));
 };
+
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
