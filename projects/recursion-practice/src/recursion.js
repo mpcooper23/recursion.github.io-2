@@ -203,21 +203,18 @@ var modulo = function(x, y) {
 // JavaScript's Math object.
 // ATTENTION DO NOT LEAVE COMMENTS IN THIS FUNCTION. The test is looking for any ('/').
 
-  var multiply = function(x, y) {
-    let result = 0;
-    let isNegative = false;
-    
-    if (y < 0) {
-      isNegative = true;
-      y = -y;
-    }
-    
-    for (let i = 0; i < y; i++) {
-      result += x;
-    }
-    
-    return isNegative ? -result : result;
-  };
+var multiply = function(a, b) {
+  if (b === 0) {
+    return 0;
+  }
+  if (b > 0) {
+    return a + multiply(a, b - 1);
+  }
+  if (b < 0) {
+    return -multiply(a, -b);
+  }
+};
+
 
 // 13. Write a function that divides two numbers without using the / operator  or
 // JavaScript's Math object.
@@ -275,6 +272,7 @@ var compareStr = function(str1, str2) {
   // Recursive case: compare the rest of the strings
   return compareStr(str1.slice(1), str2.slice(1));
 };
+
 
 
 // 16. Write a function that accepts a string and creates an array where each letter
