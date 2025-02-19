@@ -442,19 +442,36 @@ var nthFibo = function(n) {
 // 26. Given an array of words, return a new array containing each word capitalized.
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
-var capitalizeWords = function(input) {
+var capitalizeWords = function(input, output = []) {
   //base
+if(input.length === 0){
+  return output;
+}
+
+
+  output.push(input[0].toUpperCase())
+
 
   //recursion
+  return capitalizeWords(input.slice(1), output)
 };
 
 // 27. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car', 'poop', 'banana']); // ['Car', 'Poop', 'Banana']
-var capitalizeFirst = function(array) {
-    //base
+var capitalizeFirst = function(array, output = []) {
+  // Base case: if the array is empty, return the output array
+  if (array.length === 0) {
+    return output;
+  }
 
-  //recursion
+  // Capitalize the first letter of the first string and add it to the output array
+  const capitalized = array[0][0].toUpperCase() + array[0].slice(1);
+  output.push(capitalized);
+
+  // Recursive call to process the rest of the array
+  return capitalizeFirst(array.slice(1), output);
 };
+
 
 // 28. Return the sum of all even numbers in an object containing nested objects.
 // var obj1 = {
@@ -466,31 +483,89 @@ var capitalizeFirst = function(array) {
 // };
 // nestedEvenSum(obj1); // 10
 var nestedEvenSum = function(obj) {
-    //base
+  let sum = 0;
 
-  //recursion
+  for (let key in obj) {
+    const value = obj[key];
+    // Check if the value is a number and even
+    if (typeof value === 'number' && value % 2 === 0) {
+      sum += value;
+    }
+    // If the value is an object, recursively calculate the sum of even numbers
+    if (typeof value === 'object') {
+      sum += nestedEvenSum(value);
+    }
+  }
+
+  return sum;
 };
+
 
 // 29. Flatten an array containing nested arrays.
 // Example: flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(arrays) {
-    //base
+  // Base case: if the array is empty, return an empty array
+  if (arrays.length === 0) {
+    return [];
+  }
 
-  //recursion
+  // Recursive case: check the first element
+  const first = arrays[0];
+  const rest = arrays.slice(1);
+
+  // If the first element is an array, flatten it and concatenate with the rest
+  if (Array.isArray(first)) {
+    return flatten(first).concat(flatten(rest));
+  } else {
+    // If the first element is not an array, concatenate it with the flattened rest
+    return [first].concat(flatten(rest));
+  }
 };
+
 
 // 30. Given a string, return an object containing tallies of each letter.
 // letterTally('potato'); // {'p':1, 'o':2, 't':2, 'a':1}
-var letterTally = function(str, obj) {
+var letterTally = function(str, obj = {}) {
+  // Base case: if the string is empty, return the tally object
+  if (str.length === 0) {
+    return obj;
+  }
+
+  // Get the first character of the string
+  const char = str[0];
+
+  // Update the tally for the character
+  if (obj[char]) {
+    obj[char]++;
+  } else {
+    obj[char] = 1;
+  }
+
+  // Recursive call to process the rest of the string
+  return letterTally(str.slice(1), obj);
 };
+
 
 // 31. Eliminate consecutive duplicates in a list.  If the list contains repeated
 // elements they should be replaced with a single copy of the element. The order of the
 // elements should not be changed.
 // Example: compress([1, 2, 2, 3, 4, 4, 5, 5, 5]) // [1, 2, 3, 4, 5]
 // Example: compress([1, 2, 2, 3, 4, 4, 2, 5, 5, 5, 4, 4]) // [1, 2, 3, 4, 2, 5, 4]
-var compress = function(list) {
+var compress = function(list, index = 0, result = []) {
+  // Base case: if the index is equal to the list length, return the result
+  if (index >= list.length) {
+    return result;
+  }
+
+  // Add the current element to the result if it's not the same as the previous element
+  if (index === 0 || list[index] !== list[index - 1]) {
+    result.push(list[index]);
+  }
+
+  // Recursive call to process the next element
+  return compress(list, index + 1, result);
 };
+
 
 // 32. Augment every element in a list with a new value where each element is an array
 // itself.
@@ -501,20 +576,59 @@ var augmentElements = function(array, aug) {
 // 33. Reduce a series of zeroes to a single 0.
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
-var minimizeZeroes = function(array) {
+var minimizeZeroes = function(array, index = 0, result = []) {
+  // Base case: if the index is equal to the array length, return the result
+  if (index >= array.length) {
+    return result;
+  }
+
+  // Add the current element to the result if it's not a zero or if it's the first zero in a series
+  if (array[index] !== 0 || (array[index] === 0 && (index === 0 || array[index - 1] !== 0))) {
+    result.push(array[index]);
+  }
+
+  // Recursive call to process the next element
+  return minimizeZeroes(array, index + 1, result);
 };
+
 
 // 34. Alternate the numbers in an array between positive and negative regardless of
 // their original sign.  The first number in the index always needs to be positive.
 // alternateSign([2,7,8,3,1,4]) // [2,-7,8,-3,1,-4]
 // alternateSign([-2,-7,8,3,-1,4]) // [2,-7,8,-3,1,-4]
 var alternateSign = function(array) {
+  return array.map((num, index) => {
+    // Make the number positive if the index is even, negative if odd
+    if (index % 2 === 0) {
+      return Math.abs(num);
+    } else {
+      return -Math.abs(num);
+    }
+  });
 };
+
 
 // 35. Given a string, return a string with digits converted to their word equivalent.
 // Assume all numbers are single digits (less than 10).
 // numToText("I have 5 dogs and 6 ponies"); // "I have five dogs and six ponies"
 var numToText = function(str) {
+  const digitToWord = {
+    '0': 'zero',
+    '1': 'one',
+    '2': 'two',
+    '3': 'three',
+    '4': 'four',
+    '5': 'five',
+    '6': 'six',
+    '7': 'seven',
+    '8': 'eight',
+    '9': 'nine'
+  };
+
+  return str.split(' ').map(word => {
+    // Check if the word is a single digit and replace it with the corresponding word
+    return digitToWord[word] || word;
+  }).join(' ');
 };
 
 // *** EXTRA CREDIT ***
