@@ -266,7 +266,7 @@ var compareStr = function(str1, str2) {
     return true;
   }
   // Base case: if the first characters are different or lengths are different, they are not identical
-  if (str1[0] !== str2[0] || str1.length !== str2.length) {
+  if (str1[0] !== str2[0]) {
     return false;
   }
   // Recursive case: compare the rest of the strings
@@ -288,13 +288,14 @@ var createArray = function(str) {
 
 
 // 17. Reverse the order of an array
-var reverseArr = function(array) {
+var reverseArr = function(array, output = []) {
   // Base case: if the array is empty, return an empty array
   if (array.length === 0) {
-    return [];
+    return output; 
   }
+  output.push(array[array.length - 1])
   // Recursive case: take the last element and concatenate it with the reverse of the rest
-  return [array[array.length - 1]].concat(reverseArr(array.slice(0, -1)));
+  return reverseArr(array.slice(0, array.length -1), output);
 };
 
 
