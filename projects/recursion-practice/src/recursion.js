@@ -426,6 +426,9 @@ var fibonacci = function(n, sequence = [0, 1]) {
 // nthFibo(3); // 2
 var nthFibo = function(n) {
   // Base case: return 0 if n is 0, and 1 if n is 1
+  if(n < 0){
+    return null;
+  }
   if (n === 0) {
     return 0;
   }
